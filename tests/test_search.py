@@ -13,8 +13,8 @@ from pages.Homepage import Homepage
     "12345",
     "@#$%"
 ])
-def test_search(setup, search_item):
-    home = Homepage(setup)
+def test_search(logged_in, search_item):
+    home = Homepage(logged_in)
 
     home.Search(search_item)
 
@@ -23,8 +23,8 @@ def test_search(setup, search_item):
     assert len(product_names) > 0
     assert '/search/' in home.get_current_url()            #to confirm its searching
 
-def test_product_details(setup):
-    home = Homepage(setup)
+def test_product_details(logged_in):
+    home = Homepage(logged_in)
 
     home.Search("bag")
 

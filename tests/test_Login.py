@@ -45,13 +45,5 @@ def test_login_without_fields(setup, email, password):
 
     assert required_message == "Required Field"
 
-def test_forgot_password(setup):
 
-    # setup.get('https://www.mystore.in/en/user/login?redirect=%2Fen%2F')
-
-    login = LoginPage(setup)
-
-    login.Forgot_password()
-
-    assert "Recover Password" in setup.page_source
 

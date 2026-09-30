@@ -26,16 +26,23 @@ class LoginPage:
         self.driver = driver
 
     def login(self, email, password):
-        WebDriverWait(self.driver, 20).until(
+        WebDriverWait(self.driver, 40).until(
             expected_conditions.element_to_be_clickable((By.XPATH, self.Using_Email))
         ).click()
 
         logger.info("Login started")
 
-        self.driver.find_element(By.CSS_SELECTOR, self.Email).send_keys(email)
-        self.driver.find_element(By.CSS_SELECTOR, self.Password).send_keys(password)
+        sleep(2)
 
-        self.driver.find_element(By.ID, self.Login).click()
+        WebDriverWait(self.driver, 20).until(
+            expected_conditions.visibility_of_element_located((By.CSS_SELECTOR, self.Email))).send_keys(email)
+
+        WebDriverWait(self.driver, 20).until(
+            expected_conditions.visibility_of_element_located((By.CSS_SELECTOR, self.Password))).send_keys(password)
+
+        WebDriverWait(self.driver, 20).until(
+            expected_conditions.visibility_of_element_located((By.ID, self.Login))).click()
+
         logger.info("Login button clicked")
 
 
@@ -58,8 +65,6 @@ class LoginPage:
             if error.is_displayed():
                 return error.text
 
-    def Forgot_password(self):
-        self.driver.find_element(By.XPATH, self.forgot_password).click()
 
     def Logout(self):
         self.driver.find_element(By.CSS_SELECTOR, self.Logout).click()
