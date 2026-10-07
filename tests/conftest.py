@@ -22,12 +22,16 @@ def setup():
 @pytest.fixture
 def logged_in(setup):
     from pages.Loginpage import LoginPage
+    from pages.Homepage import Homepage
 
     login_page = LoginPage(setup)
+    home = Homepage(setup)
 
     email = os.getenv("EMAIL")
     password = os.getenv("PASSWORD")
 
     login_page.login(email, password)
+
+    assert home.is_logged_in()
 
     return setup

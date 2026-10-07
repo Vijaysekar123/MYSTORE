@@ -1,6 +1,6 @@
 import logging
 
-logger = logging.getLogger("MYSTORE")
+logger = logging.getLogger("CANVAZO")
 logger.setLevel(logging.INFO)
 
 console_handler = logging.StreamHandler()

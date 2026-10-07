@@ -66,6 +66,8 @@ class LoginPage:
                 return error.text
 
 
+
+
     def Logout(self):
         self.driver.find_element(By.CSS_SELECTOR, self.Logout).click()
         self.driver.find_element(By.XPATH, self.logout_button).click()

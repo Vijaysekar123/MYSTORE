@@ -13,9 +13,11 @@ class Homepage:
     product_title = "//h1[@class='product-name m-0 h4 fw-semibold text-break']"
     product_image = "//img[contains(@class,'feature-image')]"
     product_price = "//span[contains(@class,'price-new')]"
+    account_holder = "//div[contains(@class,'ms-th-account-holder')]"
     def __init__(self, driver):
         self.driver = driver
     def Menu(self):
+        sleep(2)
         self.driver.find_element(By.XPATH, self.Hamburger_Menu).click()
         sleep(2)
 
@@ -49,10 +51,18 @@ class Homepage:
         return self.driver.find_element(By.XPATH, self.product_title).text
 
     def is_product_image_displayed(self):
+        sleep(2)
         return self.driver.find_element(By.XPATH, self.product_image).is_displayed()
 
     def get_product_price(self):
         return self.driver.find_element(By.XPATH, self.product_price).text
+
+    def is_logged_in(self):
+        try:
+            self.driver.find_element(By.XPATH, self.account_holder)
+            return True
+        except:
+            return False
 
     def go_back(self):
         self.driver.back()

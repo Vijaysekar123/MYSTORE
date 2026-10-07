@@ -29,19 +29,22 @@ class WishList:
         )
 
         wishlist.click()
+        self.driver.refresh()
         logger.info("Wishlist button clicked")
         sleep(2)
 
     def click_heart(self):
-        heart = WebDriverWait(
-            self.driver,
-            20,
-            ignored_exceptions=[StaleElementReferenceException]
-        ).until(
+        pink_hearts = self.driver.find_elements(By.XPATH, self.pink_heart)
+
+        if len(pink_hearts) > 0:
+            return
+
+        heart = WebDriverWait(self.driver, 20).until(
             expected_conditions.element_to_be_clickable(
                 (By.XPATH, self.heart_icon)
             )
         )
+
         heart.click()
 
     def is_heart_pink(self):
@@ -50,6 +53,13 @@ class WishList:
     def get_wishlist_products(self):
         products = self.driver.find_elements(By.XPATH, self.wishlist_products)
         return [product.get_attribute("title") for product in products]
+
+    def is_logged_in(self):
+        try:
+            self.driver.find_element(By.XPATH, self.wishlist_button)
+            return True
+        except:
+            return False
 
     def cancel(self):
         cancel_element = WebDriverWait(self.driver, 40).until(
