@@ -1,9 +1,9 @@
+import os
 
 import pytest
 import allure
 
 from pages.Loginpage import LoginPage
-from time import sleep
 
 
 @allure.title("Verify successful login")
@@ -12,9 +12,13 @@ from time import sleep
 @pytest.mark.smoke
 def test_login(setup):
     login = LoginPage(setup)
+    email = os.getenv("EMAIL")
+    password = os.getenv("PASSWORD")
+
+
 
     with allure.step("Enter valid login credentials"):
-        login.login('vjj.rain@gmail.com', 'Vj@15104089')
+        login.login(email, password)
 
     with allure.step("Verify successful login"):
         assert login.is_login_successful()
