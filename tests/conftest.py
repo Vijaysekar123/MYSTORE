@@ -2,12 +2,13 @@ import pytest
 from selenium import webdriver
 from dotenv import load_dotenv
 import os
+import allure
 
 load_dotenv()
 
 
 @pytest.fixture
-def setup():
+def setup(request):
     driver = webdriver.Chrome()
     driver.maximize_window()
 
@@ -16,7 +17,24 @@ def setup():
 
     yield driver
 
+    if request.node.rep_call.failed:
+        screenshot = driver.get_screenshot_as_png()
+
+        allure.attach(
+            screenshot,
+            name="Failure Screenshot",
+            attachment_type=allure.attachment_type.PNG
+        )
+
     driver.quit()
+
+
+@pytest.hookimpl(hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    outcome = yield
+    report = outcome.get_result()
+
+    setattr(item, "rep_" + report.when, report)
 
 
 @pytest.fixture
